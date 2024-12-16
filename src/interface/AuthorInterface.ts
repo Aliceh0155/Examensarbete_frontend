@@ -1,4 +1,5 @@
 export interface AuthorInterface {
+  id: string
   key: string
   name: string
   birth_date: string

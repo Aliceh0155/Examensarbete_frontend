@@ -1,9 +1,10 @@
-export interface OneBookInterface {
+export interface BookInterface {
   id: string
   title: string
   key: string
   description: string
-  covers: number[] // Typen Long i Java motsvarar number i TypeScript
+  covers: number[]
   coverImageUrl: string
   subjects: string[]
+  ratingsAverage: number
 }

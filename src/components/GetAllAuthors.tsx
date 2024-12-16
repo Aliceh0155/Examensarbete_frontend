@@ -25,10 +25,15 @@ const GetAllAuthors = () => {
   return (
     <div>
       <div>GetAllAuthors</div>
-      <p> Authors: {author.map((author)=>(
-        <div>key= {author.key}
-        <p>{author.name}</p></div>
-      ))}</p>
+      <div>
+        {" "}
+        Authors:{" "}
+        {author.map((author) => (
+          <div key={author.id}>
+            <p>{author.name}</p>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

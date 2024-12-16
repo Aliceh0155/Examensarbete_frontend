@@ -1,12 +1,12 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
-import { OneBookInterface } from "../interface/OneBookInterface"
+import { BookInterface } from "../interface/BookInterface"
 
 const GetOneBook = () => {
-  const [book, setbook] = useState<OneBookInterface>()
+  const [book, setBook] = useState<BookInterface>()
 
   useEffect(() => {
-    fetchBook("675c1f41fb5bda1ae9cd654d")
+    fetchBook("675ea897496e13418a9b0411")
   }, [])
 
   const fetchBook = async (bookId: String) => {
@@ -14,7 +14,7 @@ const GetOneBook = () => {
       const response = await axios.get(
         `http://localhost:8080/database/getOneBookFromDatabase/${bookId}`
       )
-      setbook(response.data)
+      setBook(response.data)
       console.log(response.data)
     } catch (error) {
       console.log("Error error errorrr...")
