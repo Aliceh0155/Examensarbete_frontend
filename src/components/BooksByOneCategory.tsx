@@ -1,10 +1,10 @@
 import axios from "axios"
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import { BookInterface } from "../interface/BookInterface"
 
-const TopRatedBooks = () => {
+const BooksByOneCategory = () => {
   const [book, setBook] = useState<BookInterface[]>([])
-  const [topRatedBooks, setTopRatedBooks] = useState<BookInterface[]>([])
+  const [fictionBooks, setFictionBooks] = useState<BookInterface[]>([])
 
   const fetchBooks = async () => {
     try {
@@ -14,15 +14,14 @@ const TopRatedBooks = () => {
 
       setBook(response.data)
 
-      const topRatedBooks = response.data
-        .sort(
-          (a: BookInterface, b: BookInterface) =>
-            b.ratingsAverage - a.ratingsAverage
+      const fictionBooks = response.data
+        .filter((book: BookInterface) =>
+          book.subjects?.includes("Children's books")
         )
         .slice(0, 15)
 
-      setTopRatedBooks(topRatedBooks)
-      console.log(topRatedBooks)
+      setFictionBooks(fictionBooks)
+      console.log(fictionBooks)
     } catch (error) {
       console.log("Error fetching books", error)
     }
@@ -37,13 +36,13 @@ const TopRatedBooks = () => {
       {/* Rad för titel och böcker */}
       <div className="flex items-center justify-between mb-2">
         {/* Titel för Top Rated Books */}
-        <h2 className="text-2xl font-semibold font-serif">Top Rated Books </h2>
+        <h2 className="text-2xl font-semibold font-serif">Children's Books</h2>
 
         {/* Horisontell scroll-container */}
         <div className="overflow-x-auto">
           {/* Rutnät för böcker, håller böcker i en rad och ger utrymme för scroll */}
           <div className="flex space-x-6 min-w-max">
-            {topRatedBooks.map((book) => (
+            {fictionBooks.map((book) => (
               <div
                 key={book.id}
                 className="relative flex flex-col items-center text-center space-y-4 group"
@@ -61,9 +60,7 @@ const TopRatedBooks = () => {
                   {/* Texten: Titel och betyg (döljs normalt, visas vid hover) */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <p className="text-lg font-semibold">{book.title}</p>
-                    <p className="text-black mt-2">
-                      Rating: {book.ratingsAverage}
-                    </p>
+                    
                   </div>
                 </div>
               </div>
@@ -75,4 +72,4 @@ const TopRatedBooks = () => {
   )
 }
 
-export default TopRatedBooks
+export default BooksByOneCategory
