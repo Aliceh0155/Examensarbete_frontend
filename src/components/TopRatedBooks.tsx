@@ -36,40 +36,42 @@ const TopRatedBooks = () => {
     <div className="p-6">
       {/* Rad för titel och böcker */}
       <div className="flex items-center justify-between mb-2">
-        {/* Titel för Top Rated Books */}
-        <h2 className="text-2xl font-semibold font-serif">Top Rated Books </h2>
+        {/* Titel för Children's Books */}
+        <h2 className="text-2xl font-semibold font-thin">Top Rated Books</h2>
+      </div>
 
-        {/* Horisontell scroll-container */}
-        <div className="overflow-x-auto">
-          {/* Rutnät för böcker, håller böcker i en rad och ger utrymme för scroll */}
-          <div className="flex space-x-6 min-w-max">
+      {/* Föräldradiv som håller både scrollcontainer och hylla */}
+      <div className="relative mb-16 w-[98%] mx-auto">
+        {/* Scroll-container för böcker */}
+        <div className="overflow-x-auto pl-6 pr-6">
+          {/* Rutnät för böcker, håller böcker i en rad */}
+          <div className="flex space-x-16 min-w-max">
             {topRatedBooks.map((book) => (
               <div
                 key={book.id}
                 className="relative flex flex-col items-center text-center space-y-4 group"
-                style={{ minWidth: "160px" }} // Sätt ett minsta bredd för varje bok
               >
                 {/* Flex-container för bokomslag */}
-                <div className="relative group shadow-md transition-shadow duration-300">
+                <div className="relative group shadow-md transition-shadow duration-300 max-w-[115px]">
                   {/* Bokomslag */}
                   <img
                     src={book.coverImageUrl}
                     alt="Cover"
-                    className="w-22 h-40 object-cover rounded-lg transition-opacity duration-300 group-hover:opacity-40 bg-transparent shadow-[15px_6px_12px_4px_rgba(0,0,0,0.1)]"
+                    className=" w-full h-[160px] object-cover rounded-sm transition-opacity duration-300 group-hover:opacity-40 bg-transparent shadow-[5px_15px_15px_8px_rgba(0,0,0,0.2)]"
                   />
 
                   {/* Texten: Titel och betyg (döljs normalt, visas vid hover) */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <p className="text-lg font-semibold">{book.title}</p>
-                    <p className="text-black mt-2">
-                      Rating: {book.ratingsAverage}
-                    </p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
+
+        {/* Hyllan under böckerna */}
+        <div className="absolute bottom-[-15px] w-full h-4 bg-[#F5F1E7] shadow-[10px_10px_10px_5px_rgba(0,0,0,0.2)] rounded-sm"></div>
       </div>
     </div>
   )
