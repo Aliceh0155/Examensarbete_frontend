@@ -8,6 +8,10 @@ import BooksByOneCategory from './components/BooksByOneCategory'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Homepage from "./pages/Homepage"
 import Navbar from './components/Navbar'
+import Userpage from './pages/Userpage'
+import Loginpage from './pages/Loginpage'
+import Registerpage from './pages/Registerpage'
+import Bookpage from './pages/Bookpage'
 
 
 function App() {
@@ -18,6 +22,10 @@ function App() {
       <div className="pt-[55px]">
         <Routes>
           <Route path="/" element={<Homepage />} />
+          <Route path="/user" element={<Userpage />} />
+          <Route path="/login" element={<Loginpage />} />
+          <Route path="/register" element={<Registerpage />} />
+          <Route path="/book" element={<Bookpage />} />
         </Routes>
       </div>
     </BrowserRouter>

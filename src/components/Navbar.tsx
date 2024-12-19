@@ -1,29 +1,20 @@
 import React from "react"
+import { Link, useNavigate } from "react-router-dom"
 
 const Navbar = () => {
   return (
-    <div className="fixed justify-evenly bg-[#EFE8D4] top-0 left-0 w-full text-[#8C7764]">
+    <div className="fixed justify-evenly bg-[#EFE8D4] top-0 left-0 w-full text-[#4F483F]">
       {/* Meny innehåll */}
       <ul className="flex  justify-evenly space-x-6 p-4">
         <li>
-          <a href="#" className="hover:text-">
+          <Link to="/" className="mr-4 text-[#4F483F]">
             Home
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#" className="hover:text-yellow-400">
-            About
-          </a>
-        </li>
-        <li>
-          <a href="#" className="hover:text-yellow-400">
-            Services
-          </a>
-        </li>
-        <li>
-          <a href="#" className="hover:text-yellow-400">
-            Contact
-          </a>
+          <Link to="/login" className="mr-4 text-[#4F483F]">
+            Login
+          </Link>
         </li>
       </ul>
     </div>
