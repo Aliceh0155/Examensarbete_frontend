@@ -7,4 +7,6 @@ export interface BookInterface {
   coverImageUrl: string
   subjects: string[]
   ratingsAverage: number
+  authorKey: string
+  authorName: string
 }

@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { BookInterface } from "../interface/BookInterface"
+import { Link } from "react-router-dom"
 
 const TopRatedBooks = () => {
   const [book, setBook] = useState<BookInterface[]>([])
@@ -54,15 +55,19 @@ const TopRatedBooks = () => {
                 {/* Flex-container för bokomslag */}
                 <div className="relative group shadow-md transition-shadow duration-300 max-w-[115px]">
                   {/* Bokomslag */}
-                  <img
-                    src={book.coverImageUrl}
-                    alt="Cover"
-                    className=" w-full h-[160px] object-cover rounded-sm transition-opacity duration-300 group-hover:opacity-40 bg-transparent shadow-[5px_15px_15px_8px_rgba(0,0,0,0.2)]"
-                  />
+                  <Link to={`/book/${book.id}`}>
+                    <img
+                      src={book.coverImageUrl}
+                      alt="Cover"
+                      className=" w-full h-[160px] object-cover rounded-sm transition-opacity duration-300 group-hover:opacity-40 bg-transparent shadow-[5px_15px_15px_8px_rgba(0,0,0,0.2)]"
+                    />
+                  </Link>
 
                   {/* Texten: Titel och betyg (döljs normalt, visas vid hover) */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <p className="text-lg font-semibold">{book.title}</p>
+                    <Link to={`/book/${book.id}`}>
+                      <p className="text-lg font-semibold">{book.title}</p>
+                    </Link>
                   </div>
                 </div>
               </div>

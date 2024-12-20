@@ -47,7 +47,7 @@ const LoginUser = () => {
         console.log("Login successful:", data)
         // Spara token
         localStorage.setItem("jwtToken", data)
-        navigate("/")
+        navigate("/user")
         alert("Login successful!")
       }
     } catch (error) {
