@@ -12,7 +12,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className="fixed justify-evenly bg-[#EFE8D4] top-0 left-0 w-full text-[#4F483F]">
+    <div className="fixed justify-evenly bg-[#EFE8D4] top-0 left-0 w-full z-50 text-[#4F483F]">
       <nav className="flex justify-evenly space-x-6 p-4">
         <div>
           <Link to="/">
@@ -24,9 +24,7 @@ const Navbar = () => {
           </Link>
         </div>
         <div>
-          <Link to="/user">
-            User Page
-          </Link>
+          <Link to="/user">User Page</Link>
         </div>
         <div>
           {!token ? (

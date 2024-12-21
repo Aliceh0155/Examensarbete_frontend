@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { BookInterface } from "../interface/BookInterface"
+import { Link } from "react-router-dom"
 
 const GetAllBooks = () => {
   const [book, setBook] = useState<BookInterface[]>([])
@@ -24,10 +25,11 @@ const GetAllBooks = () => {
   const defaultImage =
     "https://i.pinimg.com/736x/39/63/0d/39630d738fa51ab55d30bd4b0b42cb3a.jpg"
 
- return (
+  return (
     <div className="p-6">
-      {/* Titel för sidan */}
-      <h2 className="text-3xl font-semibold text-center mb-6">All Books</h2>
+      <div className="flex items-center justify-between mb-2">
+        <h2 className="text-2xl text-[#34302c] font-thin">All Books</h2>
+      </div>
 
       {/* Grid för böcker */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-8 gap-6">
@@ -38,21 +40,29 @@ const GetAllBooks = () => {
           >
             {/* Flex-container för bokomslag */}
             <div className="relative max-w-[110px]">
-              {/* Bokomslag */}
-              <img
-                src={
-                  book.coverImageUrl !== "" ? book.coverImageUrl : defaultImage
-                }
-                alt="Cover"
-                className="w-full h-[160px] object-cover rounded-sm transition-opacity duration-300 group-hover:opacity-75 bg-transparent shadow-[5px_5px_10px_rgba(0,0,0,0.1)]"
-              />
+              <Link to={`/book/${book.id}`} className="block">
+                {/* Bokomslag */}
+                <img
+                  src={
+                    book.coverImageUrl !== ""
+                      ? book.coverImageUrl
+                      : defaultImage
+                  }
+                  alt={book.title}
+                  className="w-full h-[150px] object-cover rounded-sm transition-opacity duration-300 group-hover:opacity-75 bg-transparent shadow-[5px_5px_10px_rgba(0,0,0,0.1)]"
+                />
+              </Link>
             </div>
-
-            {/* Titel */}
-            <p className="text-lg font-semibold text-gray-800">{book.title}</p>
-
+            <Link to={`/book/${book.id}`} className="block">
+              {/* Titel */}
+              <p className="text-m text-[#34302c]">{book.title}</p>
+            </Link>
             {/* Författarens namn */}
-            <p className="text-sm text-gray-600">{book.authorName}</p>
+            <Link to={`/author/${book.authorKey}`} className="block">
+              <p className="text-m font-light text-[#34302c]">
+                {book.authorName}
+              </p>
+            </Link>
           </div>
         ))}
       </div>

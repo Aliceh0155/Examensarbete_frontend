@@ -18,6 +18,7 @@ import GetAuthorWorks from "./components/GetAuthorWorks"
 import Authorpage from "./pages/Authorpage"
 import BooksBySubject from "./components/BooksBySubject"
 import { ToastContainer } from "react-toastify"
+import GetAllBooks from "./components/GetAllBooks"
 
 function App() {
   return (
@@ -38,7 +39,7 @@ function App() {
           <Route path="/book/:id" element={<Bookpage />} />
           <Route path="/author/:key" element={<Authorpage />} />
           <Route path="/user" element={<Userpage />} />
-          <Route path="/allBooks" element={<AllBookspage />} />
+          <Route path="/allBooks" element={<GetAllBooks />} />
           <Route path="/allAuthors" element={<AllAuthorsPage />} />
         </Routes>
     </BrowserRouter>
