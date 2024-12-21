@@ -4,7 +4,7 @@ import TopRatedBooks from "../components/TopRatedBooks"
 
 const Homepage = () => {
   return (
-    <div className="bg-[#EFE8D4]">
+    <div className="bg-[#EFE8D4] fixed -inset-x-1 ">
       <TopRatedBooks />
       <BooksByOneCategory />
     </div>

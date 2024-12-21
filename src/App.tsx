@@ -16,14 +16,24 @@ import AllBookspage from "./pages/AllBookspage"
 import AllAuthorsPage from "./pages/AllAuthorsPage"
 import GetAuthorWorks from "./components/GetAuthorWorks"
 import Authorpage from "./pages/Authorpage"
+import BooksBySubject from "./components/BooksBySubject"
+import { ToastContainer } from "react-toastify"
 
 function App() {
   return (
     <BrowserRouter>
       <Navbar /> {/* Navbar kommer att vara synlig på alla sidor */}
-      <div className="pt-[55px]">
+      <div className="min-h-screen pt-[55px] overflow-hidden">
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          className="p-4" // Behåll denna utan bg-färg, så att container inte får beige bakgrund
+          toastClassName="bg-[#EFE8D4] text-black font-semibold rounded-lg shadow-md p-3"
+          progressClassName="bg-pink-600"
+        />
         <Routes>
           <Route path="/" element={<Homepage />} />
+          <Route path="/test" element={<BooksBySubject />} />
           <Route path="/login" element={<Loginpage />} />
           <Route path="/register" element={<Registerpage />} />
           <Route path="/book/:id" element={<Bookpage />} />
