@@ -4,7 +4,7 @@ import TopRatedBooks from "../components/TopRatedBooks"
 
 const Homepage = () => {
   return (
-    <div className="bg-[#EFE8D4] fixed -inset-x-1 ">
+    <div className="bg-[#EFE8D4] pt-[55px] min-h-screen max-h-screen overflow-hidden">
       <TopRatedBooks />
       <BooksByOneCategory />
     </div>

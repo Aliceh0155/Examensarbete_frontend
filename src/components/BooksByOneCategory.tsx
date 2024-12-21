@@ -34,7 +34,7 @@ const BooksByOneCategory = () => {
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-2">
-        <h2 className="text-2xl font-thin">Children's Books</h2>
+        <h2 className="text-2xl text-[#322c25] font-thin">Children's Books</h2>
       </div>
 
       {/* Div with scroll container and shelf */}

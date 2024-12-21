@@ -24,7 +24,7 @@ const GetAllBooks = () => {
   const defaultImage =
     "https://i.pinimg.com/736x/39/63/0d/39630d738fa51ab55d30bd4b0b42cb3a.jpg"
 
-  https: return (
+ return (
     <div className="p-6">
       {/* Titel för sidan */}
       <h2 className="text-3xl font-semibold text-center mb-6">All Books</h2>

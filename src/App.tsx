@@ -22,12 +22,11 @@ import { ToastContainer } from "react-toastify"
 function App() {
   return (
     <BrowserRouter>
-      <Navbar /> {/* Navbar kommer att vara synlig på alla sidor */}
-      <div className="min-h-screen pt-[55px] overflow-hidden">
+      <Navbar />
         <ToastContainer
           position="top-center"
           autoClose={5000}
-          className="p-4" // Behåll denna utan bg-färg, så att container inte får beige bakgrund
+          className="p-4" 
           toastClassName="bg-[#EFE8D4] text-black font-semibold rounded-lg shadow-md p-3"
           progressClassName="bg-pink-600"
         />
@@ -42,7 +41,6 @@ function App() {
           <Route path="/allBooks" element={<AllBookspage />} />
           <Route path="/allAuthors" element={<AllAuthorsPage />} />
         </Routes>
-      </div>
     </BrowserRouter>
   )
 }

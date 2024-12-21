@@ -49,47 +49,43 @@ const CurrentlyReading = () => {
 
   return (
     <div className="">
-      {/* Rad för titel och böcker */}
       <div className="flex items-center justify-between mb-2">
-        {/* Titel för Children's Books */}
-        <h2 className="text-2xl font-semibold font-thin">Currently Reading</h2>
+        <h2 className="pl-4 text-xl text-[#322c25] font-thin">
+          Currently Reading
+        </h2>
       </div>
 
-      {/* Föräldradiv som håller både scrollcontainer och hylla */}
-      <div className="relative mb-16 w-[88%] mx-auto">
-        {/* Scroll-container för böcker */}
+      {/* Parent div */}
+      <div className="relative mb-10 w-[94%] mx-auto">
+        {/* Scroll container */}
         <div className="overflow-x-auto pl-6 pr-6">
-          {/* Rutnät för böcker, håller böcker i en rad */}
-          <div className="flex space-x-16 min-w-max">
+          <div className="flex space-x-12 min-w-max">
             {book.map((book) => (
               <div
                 key={book.id}
-                className="relative flex flex-col items-center text-center space-y-4 group"
+                className="relative flex flex-col items-center text-center space-y-2 group"
               >
-                {/* Flex-container för bokomslag */}
-                <div className="relative group shadow-md transition-shadow duration-300 max-w-[115px]">
-                  {/* Bokomslag */}
+                {/* Container for book cover */}
+                <div className="relative group shadow-md transition-shadow duration-300 max-w-[110px]">
                   <Link to={`/book/${book.id}`}>
                     <img
                       src={book.coverImageUrl}
                       alt="Cover"
-                      className=" w-full h-[100px] object-cover rounded-sm transition-opacity duration-300 group-hover:opacity-40 bg-transparent shadow-[5px_15px_15px_8px_rgba(0,0,0,0.2)]"
+                      className="w-[85px] h-[128px] object-cover rounded-sm transition-opacity duration-300 group-hover:opacity-40 bg-transparent shadow-[5px_15px_15px_8px_rgba(0,0,0,0.2)]"
                     />
-                  </Link>
 
-                  {/* Texten: Titel och betyg (döljs normalt, visas vid hover) */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Link to={`/book/${book.id}`}>
-                      <p className="text-lg font-semibold">{book.title}</p>
-                    </Link>
-                  </div>
+                    {/* Title only shown when hover */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <p className="text-sm font-normal">{book.title}</p>
+                    </div>
+                  </Link>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Hyllan under böckerna */}
+        {/* Book shelf */}
         <div className="absolute bottom-[-10px] w-full h-2 bg-[#F5F1E7] shadow-[10px_10px_10px_5px_rgba(0,0,0,0.2)] rounded-sm"></div>
       </div>
     </div>

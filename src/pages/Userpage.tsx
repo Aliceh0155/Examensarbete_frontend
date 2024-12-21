@@ -7,10 +7,10 @@ import { useEffect } from "react"
 const Userpage = () => {
 
   return (
-    <div className="bg-[#EFE8D4]">
-      <FavoriteBooks/>
-      <CurrentlyReading/>
-      <WantToRead/>
+    <div className="bg-[#EFE8D4] min-h-screen overflow-hidden pt-[55px]">
+      <FavoriteBooks />
+      <CurrentlyReading />
+      <WantToRead />
     </div>
   )
 }

@@ -1,21 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AuthorInterface } from '../interface/AuthorInterface'
 import axios from 'axios'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 const GetOneAuthor = () => {
     const [author, setAuthor] = useState<AuthorInterface>()
     const { key } = useParams<{ key?: string }>()
-    const navigate = useNavigate()
-    const token = localStorage.getItem("jwtToken")
 
-    useEffect(() => {
-      if (!token) {
-        navigate("/login")
-      }
-    }, [token, navigate])
 
-    const fetchBook = async (authorKey: string) => {
+    const fetchAuthor = async (authorKey: string) => {
       try {
         const response = await axios.get(
           `http://localhost:8080/database/getOneAuthorFromDatabase/${authorKey}`
@@ -23,15 +16,15 @@ const GetOneAuthor = () => {
         setAuthor(response.data)
         console.log(response.data)
       } catch (error) {
-        console.log("Error error errorrr...")
+        console.log("Error fetching author", error)
       }
     }
 
     useEffect(() => {
-      if (key && token) {
-        fetchBook(key)
+      if (key) {
+        fetchAuthor(key)
       }
-    }, [key, token])
+    }, [key])
 
     return (
       <div className="flex bg-[#F5F1E7] shadow-md rounded-lg overflow-hidden w-[900px] h-[550px] mx-auto">

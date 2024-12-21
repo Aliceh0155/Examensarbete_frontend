@@ -1,9 +1,11 @@
 import { useState } from "react"
 import axios from "axios"
 import { AddListInterface } from "../interface/AddListInterface"
+import { toast } from "react-toastify"
 
 const AddToCurrentlyReading = ({ bookId }: AddListInterface) => {
   const [currentlyReading, setcurrentlyReading] = useState(false)
+  const token = localStorage.getItem("jwtToken")
 
   const handleAddCurrentlyReading = async () => {
     try {
@@ -12,26 +14,29 @@ const AddToCurrentlyReading = ({ bookId }: AddListInterface) => {
         {},
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       )
 
-      if (response.status === 200) {
-        setcurrentlyReading(true)
-        alert("Book added to currently reading!")
-      } else {
-        alert("Failed to add book to currently reading.")
-      }
+      setcurrentlyReading(true)
+      toast.success("Book added to Currently Reading")
+      console.log(response.data)
     } catch (error) {
-      console.error("Error adding book to currently reading:", error)
-      alert("Something went wrong. Please try again.")
+      console.error("Error adding book to Currently Reading: ", error)
+      toast.error("This book is already in your Currently Reading list")
     }
   }
 
   return (
-    <button onClick={handleAddCurrentlyReading} disabled={currentlyReading}>
-      {currentlyReading ? "Added to currently reading" : "Add to currently reading"}
+    <button
+      className="bg-[#EFE8D4] text-[#322c25] p-2 rounded-lg hover:scale-105 transition-transform duration-300"
+      onClick={handleAddCurrentlyReading}
+      disabled={currentlyReading}
+    >
+      {currentlyReading
+        ? "Added to currently reading"
+        : "Add to currently reading"}
     </button>
   )
 }
