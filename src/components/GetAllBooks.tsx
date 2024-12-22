@@ -1,25 +1,12 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
-import { BookInterface } from "../interface/BookInterface"
 import { Link } from "react-router-dom"
+import useGlobalState from "../store/GlobalState"
 
 const GetAllBooks = () => {
-  const [book, setBook] = useState<BookInterface[]>([])
-
-  const fetchBooks = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:8080/database/getAllBooksFromDatabase"
-      )
-      console.log(response.data)
-      setBook(response.data)
-    } catch (error) {
-      console.log("Error fetching books", error)
-    }
-  }
+  const { fetchAllBooks, allBooks } = useGlobalState()
 
   useEffect(() => {
-    fetchBooks()
+    fetchAllBooks()
   }, [])
 
   const defaultImage =
@@ -31,17 +18,15 @@ const GetAllBooks = () => {
         <h2 className="text-2xl text-[#34302c] font-thin">All Books</h2>
       </div>
 
-      {/* Grid för böcker */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-8 gap-6">
-        {book.map((book) => (
+        {allBooks.map((book) => (
           <div
             key={book.id}
             className="relative flex flex-col items-center text-center space-y-2 group"
           >
-            {/* Flex-container för bokomslag */}
+            {/* Book cover container */}
             <div className="relative max-w-[110px]">
               <Link to={`/book/${book.id}`} className="block">
-                {/* Bokomslag */}
                 <img
                   src={
                     book.coverImageUrl !== ""
@@ -54,10 +39,10 @@ const GetAllBooks = () => {
               </Link>
             </div>
             <Link to={`/book/${book.id}`} className="block">
-              {/* Titel */}
+              {/* Title */}
               <p className="text-m text-[#34302c]">{book.title}</p>
             </Link>
-            {/* Författarens namn */}
+            {/* Author name*/}
             <Link to={`/author/${book.authorKey}`} className="block">
               <p className="text-m font-light text-[#34302c]">
                 {book.authorName}

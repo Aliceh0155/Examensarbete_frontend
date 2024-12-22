@@ -1,42 +1,40 @@
-import { useState } from "react"
-import axios from "axios"
+import { useEffect, useState } from "react"
 import { AddListInterface } from "../interface/AddListInterface"
-import { toast } from "react-toastify"
+import useGlobalState from "../store/GlobalState"
 
 const AddToCurrentlyReading = ({ bookId }: AddListInterface) => {
-  const [currentlyReading, setcurrentlyReading] = useState(false)
-  const token = localStorage.getItem("jwtToken")
+  const {
+    addToCurrentlyReading,
+    removeFromCurrentlyReading,
+    currentlyReading,
+  } = useGlobalState()
+  const [isInCurrentlyReading, setIsInCurrentlyReading] = useState(false)
 
-  const handleAddCurrentlyReading = async () => {
-    try {
-      const response = await axios.post(
-        `http://localhost:8080/user/addBookToCurrentlyReading/${bookId}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+  useEffect(() => {
+    setIsInCurrentlyReading(currentlyReading.some((book) => book.id === bookId))
+  }, [currentlyReading, bookId])
 
-      setcurrentlyReading(true)
-      toast.success("Book added to Currently Reading")
-      console.log(response.data)
-    } catch (error) {
-      console.error("Error adding book to Currently Reading: ", error)
-      toast.error("This book is already in your Currently Reading list")
-    }
+  const handleAddToCurrentlyReading = () => {
+    addToCurrentlyReading(bookId)
+  }
+
+  const handleRemoveFromCurrentlyReading = () => {
+    removeFromCurrentlyReading(bookId)
   }
 
   return (
     <button
       className="bg-[#EFE8D4] text-[#322c25] p-2 rounded-lg hover:scale-105 transition-transform duration-300"
-      onClick={handleAddCurrentlyReading}
-      disabled={currentlyReading}
+      onClick={
+        isInCurrentlyReading
+          ? handleRemoveFromCurrentlyReading
+          : handleAddToCurrentlyReading
+      }
+      disabled={false}
     >
-      {currentlyReading
-        ? "Added to currently reading"
-        : "Add to currently reading"}
+      {isInCurrentlyReading
+        ? "Remove from 'Currently Reading'"
+        : "Add to 'Currently Reading'"}
     </button>
   )
 }

@@ -1,51 +1,8 @@
-import axios from "axios"
-import React, { useEffect, useState } from "react"
-import { BookInterface } from "../interface/BookInterface"
 import { Link } from "react-router-dom"
+import useGlobalState from "../store/GlobalState"
 
 const CurrentlyReading = () => {
-  const [book, setBook] = useState<BookInterface[]>([])
-  const [allBooks, setallBooks] = useState<BookInterface[]>([])
-  const [currentlyReadingId, setcurrentlyReadingId] = useState<String[]>([])
-
-  const fetchBooks = async () => {
-    try {
-      const token = localStorage.getItem("jwtToken")
-      const allBooksResponse = await axios.get(
-        "http://localhost:8080/database/getAllBooksFromDatabase",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      setallBooks(allBooksResponse.data)
-
-      // Hämta favoriter (endast IDs)
-      const currentlyReadingResponse = await axios.get(
-        "http://localhost:8080/user/getCurrentlyReading",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      setcurrentlyReadingId(currentlyReadingResponse.data)
-    } catch (error) {
-      console.error("Error fetching want to read", error)
-    }
-  }
-
-  useEffect(() => {
-    fetchBooks()
-  }, [])
-
-  useEffect(() => {
-    const filterCurrentlyReading = allBooks.filter((book) =>
-      currentlyReadingId.includes(book.id)
-    )
-    setBook(filterCurrentlyReading)
-  }, [allBooks, currentlyReadingId])
+  const { currentlyReading } = useGlobalState()
 
   return (
     <div className="">
@@ -60,7 +17,7 @@ const CurrentlyReading = () => {
         {/* Scroll container */}
         <div className="overflow-x-auto pl-6 pr-6">
           <div className="flex space-x-12 min-w-max">
-            {book.map((book) => (
+            {currentlyReading.map((book) => (
               <div
                 key={book.id}
                 className="relative flex flex-col items-center text-center space-y-2 group"

@@ -1,10 +1,11 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { BookInterface } from "../interface/BookInterface"
+import useGlobalState from "../store/GlobalState"
 
 const BooksBySubject = () => {
-  const [books, setBooks] = useState<BookInterface[]>([])
-  const [filteredBooks, setFilteredBooks] = useState<BookInterface[]>([])
+  const { allBooks, filteredBooks, fetchBooksByCategory, fetchAllBooks } =
+    useGlobalState()
 
   const categories = [
     "Fiction",
@@ -18,30 +19,16 @@ const BooksBySubject = () => {
     "Romance",
   ]
 
-  // Hämtar alla böcker
-  const fetchBooks = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:8080/database/getAllBooksFromDatabase"
-      )
-      setBooks(response.data)
-      setFilteredBooks(response.data) // Initiera med alla böcker
-    } catch (error) {
-      console.log("Error fetching books", error)
+  useEffect(() => {
+    if (allBooks.length === 0) {
+      fetchAllBooks() // Hämtar böcker om de inte är hämtade än
     }
-  }
+  }, [allBooks, fetchAllBooks])
 
   // Filtrera böcker baserat på kategori
-  const filterBooksByCategory = (category: string) => {
-    const filtered = books.filter((book: BookInterface) =>
-      book.subjects?.includes(category)
-    )
-    setFilteredBooks(filtered)
+  const filterBooks = (category: string) => {
+    fetchBooksByCategory(category) // Använder den globala funktionen för att filtrera böcker
   }
-
-  useEffect(() => {
-    fetchBooks()
-  }, [])
 
   return (
     <div className="p-6">
@@ -54,7 +41,7 @@ const BooksBySubject = () => {
         {categories.map((category) => (
           <button
             key={category}
-            onClick={() => filterBooksByCategory(category)}
+            onClick={() => filterBooks(category)}
             className="px-4 py-2 mx-2 mb-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition duration-200"
           >
             {category}

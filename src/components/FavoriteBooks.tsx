@@ -1,51 +1,8 @@
-import { useEffect, useState } from "react"
-import { BookInterface } from "../interface/BookInterface"
-import axios from "axios"
 import { Link } from "react-router-dom"
+import useGlobalState from "../store/GlobalState"
 
 const FavoriteBooks = () => {
-  const [book, setBook] = useState<BookInterface[]>([])
-  const [allBooks, setallBooks] = useState<BookInterface[]>([])
-  const [favoriteId, setfavoriteId] = useState<String[]>([])
-  const token = localStorage.getItem("jwtToken")
-
-  const fetchBooks = async () => {
-    try {
-      const allBooksResponse = await axios.get(
-        "http://localhost:8080/database/getAllBooksFromDatabase",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      setallBooks(allBooksResponse.data)
-
-      const favoriteIdResponse = await axios.get(
-        "http://localhost:8080/user/getFavoriteBooks",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      setfavoriteId(favoriteIdResponse.data)
-      console.log(favoriteIdResponse.data)
-    } catch (error) {
-      console.error("Error fetching favorites", error)
-    }
-  }
-
-  useEffect(() => {
-    fetchBooks()
-  }, [])
-
-  useEffect(() => {
-    const filterFavorites = allBooks.filter((book) =>
-      favoriteId.includes(book.id)
-    )
-    setBook(filterFavorites)
-  }, [allBooks, favoriteId])
+  const { favoriteBooks } = useGlobalState()
 
   return (
     <div className="">
@@ -60,7 +17,7 @@ const FavoriteBooks = () => {
         {/* Scroll container */}
         <div className="overflow-x-auto pl-6 pr-6">
           <div className="flex space-x-12 min-w-max">
-            {book.map((book) => (
+            {favoriteBooks.map((book) => (
               <div
                 key={book.id}
                 className="relative flex flex-col items-center text-center space-y-2 group"

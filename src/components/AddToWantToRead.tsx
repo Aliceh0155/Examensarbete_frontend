@@ -1,40 +1,32 @@
-import { useState } from "react"
-import axios from "axios"
+import { useEffect, useState } from "react"
 import { AddListInterface } from "../interface/AddListInterface"
-import { toast } from "react-toastify"
+import useGlobalState from "../store/GlobalState"
 
 const AddToWantToRead = ({ bookId }: AddListInterface) => {
-  const [wantToRead, setwantToReadId] = useState(false)
-  const token = localStorage.getItem("jwtToken")
+  const { addToWantToRead, removeFromWantToRead, wantToRead } = useGlobalState()
+  const [isInWantToRead, setIsInWantToRead] = useState(false)
 
-  const handleWantToRead = async () => {
-    try {
-      const response = await axios.post(
-        `http://localhost:8080/user/addBookToWantToRead/${bookId}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+  useEffect(() => {
+    setIsInWantToRead(wantToRead.some((book) => book.id === bookId))
+  }, [wantToRead, bookId])
 
-      setwantToReadId(true)
-      toast.success("Book added to Want To Read")
-      console.log(response.data)
-    } catch (error) {
-      console.error("Error adding book to Want To Read: ", error)
-      toast.error("This book is already in your Want To Read list")
-    }
+  const handleAddToWantToRead = () => {
+    addToWantToRead(bookId)
+  }
+
+  const handleRemoveFromWantToRead = () => {
+    removeFromWantToRead(bookId)
   }
 
   return (
     <button
       className="bg-[#EFE8D4] text-[#322c25] p-2 rounded-lg hover:scale-105 transition-transform duration-300"
-      onClick={handleWantToRead}
-      disabled={wantToRead}
+      onClick={
+        isInWantToRead ? handleRemoveFromWantToRead : handleAddToWantToRead
+      }
+      disabled={false}
     >
-      {wantToRead ? "Added to want to read" : "Add to want to read"}
+      {isInWantToRead ? "Remove from 'Want to Read'" : "Add to 'Want to Read'"}
     </button>
   )
 }

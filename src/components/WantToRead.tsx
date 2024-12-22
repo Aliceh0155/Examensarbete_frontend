@@ -1,57 +1,13 @@
-import axios from "axios"
-import { useState, useEffect } from "react"
-import { BookInterface } from "../interface/BookInterface"
 import { Link } from "react-router-dom"
+import useGlobalState from "../store/GlobalState"
 
 const WantToRead = () => {
-  const [book, setBook] = useState<BookInterface[]>([])
-  const [allBooks, setallBooks] = useState<BookInterface[]>([])
-  const [wantToReadId, setwantToReadId] = useState<String[]>([])
-
-  const fetchBooks = async () => {
-    try {
-      const token = localStorage.getItem("jwtToken")
-      const allBooksResponse = await axios.get(
-        "http://localhost:8080/database/getAllBooksFromDatabase",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      setallBooks(allBooksResponse.data)
-
-      const wantToReadResponse = await axios.get(
-        "http://localhost:8080/user/getWantToRead",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      setwantToReadId(wantToReadResponse.data)
-    } catch (error) {
-      console.error("Error fetching want to read", error)
-    }
-  }
-
-  useEffect(() => {
-    fetchBooks()
-  }, [])
-
-  useEffect(() => {
-    const filterWantToRead = allBooks.filter((book) =>
-      wantToReadId.includes(book.id)
-    )
-    setBook(filterWantToRead)
-  }, [allBooks, wantToReadId])
+  const { wantToRead } = useGlobalState()
 
   return (
     <div className="">
       <div className="flex items-center justify-between mb-2">
-        <h2 className="pl-4 text-xl text-[#322c25] font-thin">
-          Want to Read
-        </h2>
+        <h2 className="pl-4 text-xl text-[#322c25] font-thin">Want to Read</h2>
       </div>
 
       {/* Parent div */}
@@ -59,7 +15,7 @@ const WantToRead = () => {
         {/* Scroll container */}
         <div className="overflow-x-auto pl-6 pr-6">
           <div className="flex space-x-12 min-w-max">
-            {book.map((book) => (
+            {wantToRead.map((book) => (
               <div
                 key={book.id}
                 className="relative flex flex-col items-center text-center space-y-2 group"

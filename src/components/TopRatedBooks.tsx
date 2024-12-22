@@ -1,35 +1,23 @@
-import axios from "axios"
 import { useState, useEffect } from "react"
 import { BookInterface } from "../interface/BookInterface"
 import { Link } from "react-router-dom"
+import useGlobalState from "../store/GlobalState"
 
 //This component returns 15 books based on the highest rating
 
 const TopRatedBooks = () => {
+  const { allBooks } = useGlobalState()
   const [topRatedBooks, setTopRatedBooks] = useState<BookInterface[]>([])
 
-  const fetchBooks = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:8080/database/getAllBooksFromDatabase"
-      )
-      const topRatedBooks = response.data
-        .sort(
-          (a: BookInterface, b: BookInterface) =>
-            b.ratingsAverage - a.ratingsAverage
-        )
-        .slice(0, 15)
-
-      setTopRatedBooks(topRatedBooks)
-      console.log(topRatedBooks)
-    } catch (error) {
-      console.log("Error fetching books", error)
-    }
-  }
-
   useEffect(() => {
-    fetchBooks()
-  }, [])
+    if (allBooks.length > 0) {
+      const sortedBooks = allBooks
+        .sort((a, b) => b.ratingsAverage - a.ratingsAverage)
+        .slice(0, 15)
+      setTopRatedBooks(sortedBooks)
+      console.log(topRatedBooks)
+    }
+  }, [allBooks])
 
   return (
     <div className="p-6">

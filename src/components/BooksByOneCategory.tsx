@@ -1,35 +1,24 @@
-import axios from "axios"
 import { useEffect, useState } from "react"
 import { BookInterface } from "../interface/BookInterface"
 import { Link } from "react-router-dom"
+import useGlobalState from "../store/GlobalState"
 
 //This component returns 15 books from the category/subject "Children's books"
 
 const BooksByOneCategory = () => {
-  const [childrensBooks, setchildrensBooks] = useState<BookInterface[]>([])
+  const { allBooks } = useGlobalState()
+  const [childrensBooks, setChildrensBooks] = useState<BookInterface[]>([])
 
-  const fetchBooks = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:8080/database/getAllBooksFromDatabase"
-      )
-      const childrensBooks = response.data
-
+  useEffect(() => {
+    if (allBooks.length > 0) {
+      const filteredBooks = allBooks
         .filter((book: BookInterface) =>
           book.subjects?.includes("Children's books")
         )
         .slice(0, 15)
-
-      setchildrensBooks(childrensBooks)
-      console.log(childrensBooks)
-    } catch (error) {
-      console.log("Error fetching books", error)
+      setChildrensBooks(filteredBooks)
     }
-  }
-
-  useEffect(() => {
-    fetchBooks()
-  }, [])
+  }, [allBooks])
 
   return (
     <div className="p-6">
