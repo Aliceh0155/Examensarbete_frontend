@@ -19,29 +19,32 @@ import Authorpage from "./pages/Authorpage"
 import BooksBySubject from "./components/BooksBySubject"
 import { ToastContainer } from "react-toastify"
 import GetAllBooks from "./components/GetAllBooks"
+import SearchBooks from "./components/SearchBooks"
+import FindBookPage from "./pages/FindBookPage"
 
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
-        <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          className="p-4" 
-          toastClassName="bg-[#EFE8D4] text-black font-semibold rounded-lg shadow-md p-3"
-          progressClassName="bg-pink-600"
-        />
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/test" element={<BooksBySubject />} />
-          <Route path="/login" element={<Loginpage />} />
-          <Route path="/register" element={<Registerpage />} />
-          <Route path="/book/:id" element={<Bookpage />} />
-          <Route path="/author/:key" element={<Authorpage />} />
-          <Route path="/user" element={<Userpage />} />
-          <Route path="/allBooks" element={<GetAllBooks />} />
-          <Route path="/allAuthors" element={<AllAuthorsPage />} />
-        </Routes>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        className="p-4"
+        toastClassName="bg-[#EFE8D4] text-black font-semibold rounded-lg shadow-md p-3"
+        progressClassName="bg-pink-600"
+      />
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/test" element={<SearchBooks />} />
+        <Route path="/login" element={<Loginpage />} />
+        <Route path="/register" element={<Registerpage />} />
+        <Route path="/book/:id" element={<Bookpage />} />
+        <Route path="/author/:key" element={<Authorpage />} />
+        <Route path="/user" element={<Userpage />} />
+        <Route path="/allBooks" element={<GetAllBooks />} />
+        <Route path="/allAuthors" element={<AllAuthorsPage />} />
+        <Route path="/findBooks" element={<FindBookPage />} />
+      </Routes>
     </BrowserRouter>
   )
 }

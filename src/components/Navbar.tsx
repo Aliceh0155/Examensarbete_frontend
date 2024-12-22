@@ -13,11 +13,11 @@ const Navbar = () => {
 
   return (
     <div className="fixed justify-evenly bg-[#EFE8D4] top-0 left-0 w-full z-50 text-[#4F483F]">
-      <nav className="flex justify-evenly space-x-6 p-4">
+      <nav className="flex justify-between space-x-6  p-4">
         <div>
           <Link to="/">
             <img
-              className="w-32 h-auto hover:opacity-80 transition-opacity"
+              className="w-40 h-auto hover:opacity-80 transition-opacity"
               src={logo}
               alt="Examensarbete Logo"
             />
@@ -25,6 +25,9 @@ const Navbar = () => {
         </div>
         <div>
           <Link to="/user">User Page</Link>
+        </div>
+        <div>
+          <Link to="/findBooks">Find books</Link>
         </div>
         <div>
           {!token ? (
