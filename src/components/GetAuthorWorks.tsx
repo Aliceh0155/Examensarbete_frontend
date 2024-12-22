@@ -1,10 +1,10 @@
-import axios from "axios"
-import { useState, useEffect } from "react"
-import { BookInterface } from "../interface/BookInterface"
+import { useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
 import useGlobalState from "../store/GlobalState"
 
 const GetAuthorWorks = () => {
+
+// Todo - Skicka in nyckeln till authorpage? pga refresh
   const { key } = useParams<{ key: string }>()
   const { authorWorks, fetchAuthorWorks } = useGlobalState()
 
