@@ -88,7 +88,7 @@ const LoginUser = () => {
             />
           </div>
 
-          {/* Login-knapp */}
+          {/* Login */}
           <button
             type="submit"
             className="w-full bg-[#EFE8D4] text-[#4F483F] py-2 px-4 rounded-lg hover:bg-[#9e8f83] transition"

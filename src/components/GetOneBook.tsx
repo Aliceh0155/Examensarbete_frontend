@@ -1,8 +1,8 @@
 import { useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
-import AddToFavorites from "./AddToFavorites"
-import AddToWantToRead from "./AddToWantToRead"
-import AddToCurrentlyReading from "./AddToCurrentlyReading"
+import EditFavorites from "./EditFavorites"
+import EditWantToRead from "./EditWantToRead"
+import EditCurrentlyReading from "./EditCurrentlyReading"
 import useGlobalState from "../store/GlobalState"
 
 const GetOneBook = () => {
@@ -12,6 +12,7 @@ const GetOneBook = () => {
   useEffect(() => {
     if (id) {
       fetchOneBook(id)
+      console.log(oneBook)
     }
   }, [id, fetchOneBook])
 
@@ -34,9 +35,9 @@ const GetOneBook = () => {
           {/* Buttons */}
           {id && (
             <>
-              <AddToFavorites bookId={id} />
-              <AddToWantToRead bookId={id} />
-              <AddToCurrentlyReading bookId={id} />
+              <EditFavorites bookId={id} />
+              <EditWantToRead bookId={id} />
+              <EditCurrentlyReading bookId={id} />
             </>
           )}
         </div>

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import { AddListInterface } from "../interface/AddListInterface"
 import useGlobalState from "../store/GlobalState"
+import { toast } from "react-toastify"
 
-const AddToWantToRead = ({ bookId }: AddListInterface) => {
-  const { addToWantToRead, removeFromWantToRead, wantToRead } = useGlobalState()
+const EditWantToRead = ({ bookId }: AddListInterface) => {
+  const { addToWantToRead, removeFromWantToRead, wantToRead, isAuthenticated } = useGlobalState()
   const [isInWantToRead, setIsInWantToRead] = useState(false)
 
   useEffect(() => {
@@ -11,10 +12,18 @@ const AddToWantToRead = ({ bookId }: AddListInterface) => {
   }, [wantToRead, bookId])
 
   const handleAddToWantToRead = () => {
+    if (!isAuthenticated) {
+      toast.error("Please log in to edit lists")
+      return
+    }
     addToWantToRead(bookId)
   }
 
   const handleRemoveFromWantToRead = () => {
+    if (!isAuthenticated) {
+      toast.error("Please log in to edit lists")
+      return
+    }
     removeFromWantToRead(bookId)
   }
 
@@ -31,4 +40,4 @@ const AddToWantToRead = ({ bookId }: AddListInterface) => {
   )
 }
 
-export default AddToWantToRead
+export default EditWantToRead

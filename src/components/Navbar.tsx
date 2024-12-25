@@ -1,13 +1,18 @@
 import logo from "../assets/images/Examensarbete logo.png"
 import { Link, useNavigate } from "react-router-dom"
+import useGlobalState from "../store/GlobalState"
+import { useEffect } from "react"
 
 const Navbar = () => {
   const navigate = useNavigate()
-  const token = localStorage.getItem("jwtToken")
+  const { checkAuthentication, isAuthenticated, logout } = useGlobalState()
+
+  useEffect(() => {
+    checkAuthentication() // Kontrollera om användaren är inloggad vid sidladdning
+  }, [checkAuthentication])
 
   const handleLogout = () => {
-    // Ta bort token från localStorage och logga ut användaren
-    localStorage.removeItem("jwtToken")
+    logout()
     navigate("/")
   }
 
@@ -30,12 +35,10 @@ const Navbar = () => {
           <Link to="/findBooks">Find books</Link>
         </div>
         <div>
-          {!token ? (
-            <>
-              <Link to="/login" className="text-[#4F483F] mr-4 hover:underline">
-                Login
-              </Link>
-            </>
+          {!isAuthenticated ? (
+            <Link to="/login" className="text-[#4F483F] mr-4 hover:underline">
+              Login
+            </Link>
           ) : (
             <button
               onClick={handleLogout}

@@ -14,6 +14,10 @@ interface GlobalState {
   authorWorks: BookInterface[]
   filteredBooks: BookInterface[]
 
+  isAuthenticated: boolean // Ny state
+  checkAuthentication: () => void // Ny funktion
+  logout: () => void // Ny funktion
+
   setAllBooks: (books: BookInterface[]) => void
   fetchAllBooks: () => Promise<void>
   setOneBook: (book: BookInterface) => void
@@ -42,6 +46,20 @@ const useGlobalState = create<GlobalState>((set) => ({
   currentlyReading: [],
   authorWorks: [],
   filteredBooks: [],
+
+  isAuthenticated: false, 
+
+  checkAuthentication: () => {
+    const token = localStorage.getItem("jwtToken")
+    set({ isAuthenticated: !!token }) 
+  },
+
+  logout: () => {
+    localStorage.removeItem("jwtToken")
+    set({ isAuthenticated: false })
+    console.log("Logged out");
+    
+  },
 
   setAllBooks: (books) => set({ allBooks: books }),
 

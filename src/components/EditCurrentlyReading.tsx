@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react"
 import { AddListInterface } from "../interface/AddListInterface"
 import useGlobalState from "../store/GlobalState"
+import { toast } from "react-toastify"
 
-const AddToCurrentlyReading = ({ bookId }: AddListInterface) => {
+const EditToCurrentlyReading = ({ bookId }: AddListInterface) => {
   const {
     addToCurrentlyReading,
     removeFromCurrentlyReading,
     currentlyReading,
+    isAuthenticated,
   } = useGlobalState()
   const [isInCurrentlyReading, setIsInCurrentlyReading] = useState(false)
 
@@ -15,10 +17,18 @@ const AddToCurrentlyReading = ({ bookId }: AddListInterface) => {
   }, [currentlyReading, bookId])
 
   const handleAddToCurrentlyReading = () => {
+    if (!isAuthenticated) {
+      toast.error("Please log in to edit lists")
+      return
+    }
     addToCurrentlyReading(bookId)
   }
 
   const handleRemoveFromCurrentlyReading = () => {
+    if (!isAuthenticated) {
+      toast.error("Please log in to edit lists")
+      return
+    }
     removeFromCurrentlyReading(bookId)
   }
 
@@ -39,4 +49,4 @@ const AddToCurrentlyReading = ({ bookId }: AddListInterface) => {
   )
 }
 
-export default AddToCurrentlyReading
+export default EditToCurrentlyReading
