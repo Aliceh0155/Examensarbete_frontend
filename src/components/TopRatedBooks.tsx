@@ -6,8 +6,12 @@ import useGlobalState from "../store/GlobalState"
 //This component returns 15 books based on the highest rating
 
 const TopRatedBooks = () => {
-  const { allBooks } = useGlobalState()
+  const { allBooks, fetchAllBooks } = useGlobalState()
   const [topRatedBooks, setTopRatedBooks] = useState<BookInterface[]>([])
+
+  useEffect(() => {
+    fetchAllBooks()
+  }, [])
 
   useEffect(() => {
     if (allBooks.length > 0) {
@@ -21,7 +25,6 @@ const TopRatedBooks = () => {
 
   const defaultImage =
     "https://i.pinimg.com/736x/39/63/0d/39630d738fa51ab55d30bd4b0b42cb3a.jpg"
-
 
   return (
     <div className="p-6">

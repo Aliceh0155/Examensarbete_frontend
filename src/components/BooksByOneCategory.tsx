@@ -6,8 +6,12 @@ import useGlobalState from "../store/GlobalState"
 //This component returns 15 books from the category/subject "Children's books"
 
 const BooksByOneCategory = () => {
-  const { allBooks } = useGlobalState()
+  const { allBooks, fetchAllBooks } = useGlobalState()
   const [childrensBooks, setChildrensBooks] = useState<BookInterface[]>([])
+
+  useEffect(() => {
+    fetchAllBooks()
+  }, [])
 
   useEffect(() => {
     if (allBooks.length > 0) {
@@ -22,7 +26,6 @@ const BooksByOneCategory = () => {
 
   const defaultImage =
     "https://i.pinimg.com/736x/39/63/0d/39630d738fa51ab55d30bd4b0b42cb3a.jpg"
-
 
   return (
     <div className="p-6">
