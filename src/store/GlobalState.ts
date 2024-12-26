@@ -3,6 +3,7 @@ import { BookInterface } from "../interface/BookInterface"
 import { AuthorInterface } from "../interface/AuthorInterface"
 import axios from "axios"
 import { toast } from "react-toastify"
+import { IUser } from "../components/LoginUser"
 
 interface GlobalState {
   allBooks: BookInterface[]
@@ -15,6 +16,8 @@ interface GlobalState {
   filteredBooks: BookInterface[]
 
   isAuthenticated: boolean // Ny state
+  login: (user: IUser) => Promise<void>
+  register: (user: IUser) => Promise<boolean>
   checkAuthentication: () => void // Ny funktion
   logout: () => void // Ny funktion
 
@@ -47,18 +50,66 @@ const useGlobalState = create<GlobalState>((set) => ({
   authorWorks: [],
   filteredBooks: [],
 
-  isAuthenticated: false, 
+  isAuthenticated: false,
+
+  login: async (user: IUser) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/user/login",
+        user
+      )
+      localStorage.setItem("jwtToken", response.data)
+      set({ isAuthenticated: true })
+      if (response.status === 200) {
+        toast.success("Login successful!")
+        console.log("Login successful:", response.data)
+      }
+    } catch (error) {
+      if (
+        axios.isAxiosError(error) &&
+        [401, 403].includes(error.response?.status ?? 0)
+      ) {
+        toast.error("Invalid credentials. Please try again.")
+      }
+      console.error("Error occurred during login:", error)
+    }
+  },
+
+  register: async (user: IUser): Promise<boolean> => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/user/register",
+        user
+      )
+      if (response.status === 201) {
+        toast.success("User registered successfully!")
+        console.log("User registered successfully!")
+        return true 
+      } else if (response.status === 400) {
+        toast.error("Username is already taken")
+        return false
+      }
+      return false 
+    } catch (error: any) {
+      if (error.response?.status === 400) {
+        toast.error(error.response.data || "Username is already taken")
+      } else {
+        toast.error("An error occurred during registration!")
+      }
+      console.error("Error occurred during registration:", error)
+      return false
+    }
+  },
 
   checkAuthentication: () => {
     const token = localStorage.getItem("jwtToken")
-    set({ isAuthenticated: !!token }) 
+    set({ isAuthenticated: !!token })
   },
 
   logout: () => {
     localStorage.removeItem("jwtToken")
     set({ isAuthenticated: false })
-    console.log("Logged out");
-    
+    console.log("Logged out")
   },
 
   setAllBooks: (books) => set({ allBooks: books }),
