@@ -15,11 +15,11 @@ interface GlobalState {
   authorWorks: BookInterface[]
   filteredBooks: BookInterface[]
 
-  isAuthenticated: boolean // Ny state
+  isAuthenticated: boolean
   login: (user: IUser) => Promise<void>
   register: (user: IUser) => Promise<boolean>
-  checkAuthentication: () => void // Ny funktion
-  logout: () => void // Ny funktion
+  checkAuthentication: () => void
+  logout: () => void
 
   setAllBooks: (books: BookInterface[]) => void
   fetchAllBooks: () => Promise<void>
@@ -84,12 +84,12 @@ const useGlobalState = create<GlobalState>((set) => ({
       if (response.status === 201) {
         toast.success("User registered successfully!")
         console.log("User registered successfully!")
-        return true 
+        return true
       } else if (response.status === 400) {
         toast.error("Username is already taken")
         return false
       }
-      return false 
+      return false
     } catch (error: any) {
       if (error.response?.status === 400) {
         toast.error(error.response.data || "Username is already taken")
@@ -191,8 +191,12 @@ const useGlobalState = create<GlobalState>((set) => ({
         ),
       }))
       console.log(favoriteIdResponse.data)
-    } catch (error) {
-      console.error("Error fetching favorites", error)
+    } catch (error: any) {
+      if (error.response?.status === 403) {
+        const { logout } = useGlobalState.getState()
+        logout()
+      }
+      console.error("Error fetching favorite books", error)
     }
   },
 
@@ -258,8 +262,12 @@ const useGlobalState = create<GlobalState>((set) => ({
         ),
       }))
       console.log(wantToReadResponse.data)
-    } catch (error) {
-      console.error("Error fetching Want to Read books", error)
+    } catch (error: any) {
+      if (error.response?.status === 403) {
+        const { logout } = useGlobalState.getState()
+        logout()
+      }
+      console.error("Error fetching Want to read books", error)
     }
   },
 
@@ -325,8 +333,12 @@ const useGlobalState = create<GlobalState>((set) => ({
         ),
       }))
       console.log(currentlyReadingResponse.data)
-    } catch (error) {
-      console.error("Error fetching Currently Reading books", error)
+    } catch (error: any) {
+      if (error.response?.status === 403) {
+        const { logout } = useGlobalState.getState()
+        logout()
+      }
+      console.error("Error fetching Currently reading books", error)
     }
   },
 

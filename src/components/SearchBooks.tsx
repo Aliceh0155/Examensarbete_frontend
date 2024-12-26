@@ -16,7 +16,7 @@ const SearchBooks = () => {
     }
 
     const filtered = allBooks.filter(
-      (book) => book.title.toLowerCase().includes(searchQuery.toLowerCase()) // Matchar alla ord i titeln
+      (book) => book.title.toLowerCase().includes(searchQuery.toLowerCase())
     )
 
     console.log("Filtered books:", filtered)

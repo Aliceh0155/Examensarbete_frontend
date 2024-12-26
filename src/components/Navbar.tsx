@@ -8,7 +8,7 @@ const Navbar = () => {
   const { checkAuthentication, isAuthenticated, logout } = useGlobalState()
 
   useEffect(() => {
-    checkAuthentication() // Kontrollera om användaren är inloggad vid sidladdning
+    checkAuthentication() 
   }, [checkAuthentication])
 
   const handleLogout = () => {
