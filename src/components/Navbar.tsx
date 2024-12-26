@@ -17,12 +17,12 @@ const Navbar = () => {
   }
 
   return (
-    <div className="fixed justify-evenly bg-[#EFE8D4] top-0 left-0 w-full z-50 text-[#4F483F]">
-      <nav className="flex justify-between space-x-6  p-4">
-        <div>
+    <div className="fixed bg-[#EFE8D4] top-0 left-0 w-full z-50 text-[#4F483F]">
+      <nav className="flex justify-between items-center p-4 pl-8 pr-20">
+        <div className="flex-shrink-0">
           <Link to="/">
             <img
-              className="w-40 h-auto hover:opacity-80 transition-opacity"
+              className=" w-40 h-auto hover:opacity-80 transition-opacity"
               src={logo}
               alt="Examensarbete Logo"
             />
