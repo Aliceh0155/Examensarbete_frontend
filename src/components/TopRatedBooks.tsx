@@ -19,6 +19,10 @@ const TopRatedBooks = () => {
     }
   }, [allBooks])
 
+  const defaultImage =
+    "https://i.pinimg.com/736x/39/63/0d/39630d738fa51ab55d30bd4b0b42cb3a.jpg"
+
+
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-2">
@@ -40,7 +44,11 @@ const TopRatedBooks = () => {
                   <Link to={`/book/${book.id}`} className="block">
                     {/* Book cover */}
                     <img
-                      src={book.coverImageUrl}
+                      src={
+                        book.coverImageUrl !== ""
+                          ? book.coverImageUrl
+                          : defaultImage
+                      }
                       alt="Cover"
                       className="w-[110px] h-[170px] object-cover rounded-sm transition-opacity duration-300 group-hover:opacity-15 bg-transparent shadow-[5px_15px_15px_8px_rgba(0,0,0,0.2)]"
                     />

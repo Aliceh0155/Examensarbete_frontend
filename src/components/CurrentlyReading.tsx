@@ -4,6 +4,10 @@ import useGlobalState from "../store/GlobalState"
 const CurrentlyReading = () => {
   const { currentlyReading } = useGlobalState()
 
+  const defaultImage =
+    "https://i.pinimg.com/736x/39/63/0d/39630d738fa51ab55d30bd4b0b42cb3a.jpg"
+
+
   return (
     <div className="">
       <div className="flex items-center justify-between mb-2">
@@ -26,7 +30,11 @@ const CurrentlyReading = () => {
                 <div className="relative group shadow-md transition-shadow duration-300 max-w-[110px]">
                   <Link to={`/book/${book.id}`}>
                     <img
-                      src={book.coverImageUrl}
+                      src={
+                        book.coverImageUrl !== ""
+                          ? book.coverImageUrl
+                          : defaultImage
+                      }
                       alt="Cover"
                       className="w-[85px] h-[128px] object-cover rounded-sm transition-opacity duration-300 group-hover:opacity-40 bg-transparent shadow-[5px_15px_15px_8px_rgba(0,0,0,0.2)]"
                     />
