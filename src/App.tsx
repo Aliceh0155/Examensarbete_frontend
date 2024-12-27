@@ -11,6 +11,7 @@ import { ToastContainer } from "react-toastify"
 import GetAllBooks from "./components/GetAllBooks"
 import SearchBooks from "./components/SearchBooks"
 import FindBookPage from "./pages/FindBookPage"
+import GetAllAuthors from "./components/GetAllAuthors"
 
 function App() {
   return (
@@ -25,7 +26,6 @@ function App() {
       />
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route path="/test" element={<SearchBooks />} />
         <Route path="/login" element={<Loginpage />} />
         <Route path="/register" element={<Registerpage />} />
         <Route path="/book/:id" element={<Bookpage />} />

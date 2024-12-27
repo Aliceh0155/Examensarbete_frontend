@@ -14,6 +14,7 @@ interface GlobalState {
   currentlyReading: BookInterface[]
   authorWorks: BookInterface[]
   filteredBooks: BookInterface[]
+  allAuthors: AuthorInterface[]
 
   isAuthenticated: boolean
   login: (user: IUser) => Promise<void>
@@ -38,10 +39,12 @@ interface GlobalState {
   addToCurrentlyReading: (bookId: string) => void
   removeFromCurrentlyReading: (bookId: string) => void
   fetchBooksByCategory: (category: string) => void
+  fetchAllAuthors: () => Promise<void>
 }
 
 const useGlobalState = create<GlobalState>((set) => ({
   allBooks: [],
+  allAuthors: [],
   oneBook: null,
   oneAuthor: null,
   favoriteBooks: [],
@@ -139,6 +142,18 @@ const useGlobalState = create<GlobalState>((set) => ({
   },
 
   setOneBook: (book) => set({ oneBook: book }),
+
+  fetchAllAuthors: async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/database/getAllAuthorsFromDatabase"
+      )
+      set({ allAuthors: response.data })
+      console.log("Fetched authors:", response.data)
+    } catch (error) {
+      console.error("Error fetching authors:", error)
+    }
+  },
 
   fetchOneAuthor: async (authorKey: string) => {
     try {

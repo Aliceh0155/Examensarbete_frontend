@@ -1,29 +1,24 @@
 import { useEffect, useState } from "react"
-import { AuthorInterface } from "../interface/AuthorInterface"
-import axios from "axios"
+import useGlobalState from "../store/GlobalState"
 
 const GetAllAuthors = () => {
-  const [author, setAuthor] = useState<AuthorInterface[]>([])
-
-   const fetchAuthors = async () => {
-     try {
-       const response = await axios.get(
-         'http://localhost:8080/database/getAllAuthorsFromDatabase'
-       )
-       console.log(response.data)
-       setAuthor(response.data)
-     } catch (error) {
-       console.error("Error Fetching: ", error)
-     }
-   }
+   const { allAuthors, fetchAllAuthors } = useGlobalState()
 
    useEffect(() => {
-     fetchAuthors();
+     fetchAllAuthors()
    }, [])
+
   
 
   return (
-          <div>All Authors</div>
+    <div>
+      <h2>All Authors</h2>
+      <ul>
+        {allAuthors.map((author) => (
+          <li key={author.id}>{author.name}</li>
+        ))}
+      </ul>
+    </div>
   )
 }
 
