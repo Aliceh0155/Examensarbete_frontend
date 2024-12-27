@@ -19,7 +19,7 @@ const CurrentlyReading = () => {
       {/* Parent div */}
       <div className="relative mb-10 w-[94%] mx-auto">
         {/* Scroll container */}
-        <div className="overflow-x-auto pl-6 pr-6">
+        <div className="overflow-x-auto overflow-y-hidden pl-6 pr-6">
           <div className="flex space-x-12 min-w-max">
             {currentlyReading.map((book) => (
               <div
