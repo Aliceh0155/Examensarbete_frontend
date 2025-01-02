@@ -26,7 +26,7 @@ const RegisterUser = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <div className="bg-[#F5F1E7] rounded-lg shadow-lg p-8 w-80">
+      <div className="bg-[#f7f6ee] rounded-lg shadow-lg p-8 w-80">
         <h2 className="text-xl font-semibold text-center mb-6 text-[#4F483F]">
           Register User
         </h2>
