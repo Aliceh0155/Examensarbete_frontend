@@ -63,7 +63,7 @@ const LoginUser = () => {
           </button>
         </form>
         <p
-          className="text-center mt-4 text-sm text-[#4F483F]"
+          className="text-center mt-4 text-sm text-[#4F483F] hover:underline cursor-pointer"
           onClick={() => navigate("/register")}
         >
           No account yet? Register here!
