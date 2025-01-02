@@ -111,7 +111,12 @@ const useGlobalState = create<GlobalState>((set) => ({
 
   logout: () => {
     localStorage.removeItem("jwtToken")
-    set({ isAuthenticated: false })
+    set({
+      isAuthenticated: false,
+      favoriteBooks: [],
+      wantToRead: [],
+      currentlyReading: [],
+    })
     console.log("Logged out")
   },
 
@@ -227,9 +232,17 @@ const useGlobalState = create<GlobalState>((set) => ({
           },
         }
       )
-      set((state) => ({
-        favoriteBooks: [...state.favoriteBooks, response.data],
-      }))
+     set((state) => {
+       if (!state.favoriteBooks.some((book) => book.id === bookId)) {
+         return {
+           favoriteBooks: [
+             ...state.favoriteBooks,
+             { id: bookId, ...response.data },
+           ],
+         }
+       }
+       return state
+     })
       toast.success("Book added to Favorites")
       console.log(response.data)
     } catch (error) {
@@ -298,9 +311,14 @@ const useGlobalState = create<GlobalState>((set) => ({
           },
         }
       )
-      set((state) => ({
-        wantToRead: [...state.wantToRead, response.data],
-      }))
+      set((state) => {
+        if (!state.wantToRead.some((book) => book.id === bookId)) {
+          return {
+            wantToRead: [...state.wantToRead, { id: bookId, ...response.data }],
+          }
+        }
+        return state
+      })
       toast.success("Book added to 'Want to Read'")
       console.log(response.data)
     } catch (error) {
@@ -369,9 +387,17 @@ const useGlobalState = create<GlobalState>((set) => ({
           },
         }
       )
-      set((state) => ({
-        currentlyReading: [...state.currentlyReading, response.data],
-      }))
+      set((state) => {
+        if (!state.currentlyReading.some((book) => book.id === bookId)) {
+          return {
+            currentlyReading: [
+              ...state.currentlyReading,
+              { id: bookId, ...response.data },
+            ],
+          }
+        }
+        return state
+      })
       toast.success("Book added to 'Currently Reading'")
       console.log(response.data)
     } catch (error) {
